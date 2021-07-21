@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Spacial audio VR/AR</title>
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.0/dist/aframe-extras.min.js"></script>
+  </head>
+  <body>
+    <a-scene background="color: #111">
+      <audio src="main.mp3"></audio>
+
+      <button data-playing="false" role="switch" aria-checked="false">
+        <span>Play/Pause</span>
+      </button>
+
+      <input type="range" id="volume" min="0" max="2" value="1" step="0.01" />
+
+      <a-entity>
+        <a-sphere
+          id="sphere"
+          data-playing="false"
+          role="switch"
+          aria-checked="false"
+          position="0 1.75 -5"
+          color="#000000"
+        >
+          <a-entity
+            animation="property: rotation; to: 360 -360 360; loop: true; dur: 7500; easing: linear"
+          >
+            <a-ring
+              color="#133"
+              radius-inner="2"
+              radius-outer="2.25"
+              rotation="60 90 0"
+            ></a-ring>
+          </a-entity>
+          <a-entity
+            animation="property: rotation; to: -360 360 360; loop: true; dur: 7500; easing: linear"
+          >
+            <a-ring
+              color="#333"
+              radius-inner="1.1"
+              radius-outer="1.25"
+              rotation="0 0 0"
+            ></a-ring>
+          </a-entity>
+          <a-entity
+            animation="property: rotation; to: 360 360 -360; loop: true; dur: 7500; easing: linear"
+          >
+            <a-ring
+              color="#122"
+              radius-inner="1.5"
+              radius-outer="1.75"
+              rotation="0 90 0"
+            ></a-ring>
+          </a-entity>
+        </a-sphere>
+      </a-entity>
+    </a-scene>
+  </body>
+  <script type="text/javascript">
+    const AudioContext = window.AudioContext || window.webkitAudioContext;
+    const audioCtx = new AudioContext();
+    const listener = audioCtx.listener;
+
+    const posX = window.innerWidth/2;
+    const posY = window.innerHeight/2;
+    const posZ = 300;
+
+    listener.positionX.value = posX;
+    listener.positionY.value = posY;
+    listener.positionZ.value = posZ-5;
+
+    listener.forwardX.value = 0;
+    listener.forwardY.value = 0;
+    listener.forwardZ.value = -1;
+    listener.upX.value = 0;
+    listener.upY.value = 1;
+    listener.upZ.value = 0;
+
+    const pannerModel = 'HRTF';
+    const innerCone = 60;
+    const outterCone = 90;
+    const outterGain = 0.3;
+
+    const distanceModel = 'linear';
+    const maxDistance = 10_000;
+
+    const refDistance = 1;
+    const rollOff = 10;
+
+
+
+
+  </script>
+</html>
