@@ -7,48 +7,48 @@
     <title>Spacial audio VR/AR</title>
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.0/dist/aframe-extras.min.js"></script>
+    <script src="https://unpkg.com/hydra-synth"></script>
   </head>
 
   <body>
     <a-scene background="color: #111">
       <assets>
-        <audio id="main" src="deep.mp3" preload="auto"></audio>
+        <audio id="main" src="rumble.wav" preload="auto"></audio>
       </assets>
-      <a-entity>
-        <a-entity sound="src:#main; autoplay:true; loop:true; volume: .5">
-          <a-sphere id="sphere" position="0 1.75 -5" color="#000000">
-            <a-entity
-              animation="property: rotation; to: 360 -360 360; loop: true; dur: 7500; easing: linear"
-            >
-              <a-ring
-                color="#133"
-                radius-inner="2"
-                radius-outer="2.25"
-                rotation="60 90 0"
-              ></a-ring>
-            </a-entity>
-            <a-entity
-              animation="property: rotation; to: -360 360 360; loop: true; dur: 7500; easing: linear"
-            >
-              <a-ring
-                color="#333"
-                radius-inner="1.1"
-                radius-outer="1.25"
-                rotation="0 0 0"
-              ></a-ring>
-            </a-entity>
-            <a-entity
-              animation="property: rotation; to: 360 360 -360; loop: true; dur: 7500; easing: linear"
-            >
-              <a-ring
-                color="#122"
-                radius-inner="1.5"
-                radius-outer="1.75"
-                rotation="0 90 0"
-              ></a-ring>
-            </a-entity>
-          </a-sphere>
-        </a-entity>
+
+      <a-entity sound="src:#main; autoplay:true; loop:true; volume: .5">
+        <a-sphere id="sphere" position="0 1.75 -5" color="#000000">
+          <a-entity
+            animation="property: rotation; to: 360 -360 360; loop: true; dur: 7500; easing: linear"
+          >
+            <a-ring
+              color="#133"
+              radius-inner="2"
+              radius-outer="2.25"
+              rotation="60 90 0"
+            ></a-ring>
+          </a-entity>
+          <a-entity
+            animation="property: rotation; to: -360 360 360; loop: true; dur: 7500; easing: linear"
+          >
+            <a-ring
+              color="#333"
+              radius-inner="1.1"
+              radius-outer="1.25"
+              rotation="0 0 0"
+            ></a-ring>
+          </a-entity>
+          <a-entity
+            animation="property: rotation; to: 360 360 -360; loop: true; dur: 7500; easing: linear"
+          >
+            <a-ring
+              color="#122"
+              radius-inner="1.5"
+              radius-outer="1.75"
+              rotation="0 90 0"
+            ></a-ring>
+          </a-entity>
+        </a-sphere>
       </a-entity>
     </a-scene>
   </body>
