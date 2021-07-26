@@ -16,30 +16,7 @@
       </a-entity>
     </a-scene>
   </body>
-  <script type="text/javascript">
-    AFRAME.registerComponent("hydra", {
-      schema: {
-        src: {},
-      },
-
-      init: function () {
-        var hydra = new Hydra({
-          canvas: document.getElementById("monster"),
-          detectAudio: false,
-        });
-        osc(10, 0.1, 0.8).rotate(0, 0.1).kaleid().color(-1, 1).out();
-
-        function feedback() {
-          src(o1)
-            .layer(src(o0).mask(shape(4, 0.4, 0)))
-            .scrollX([0.005, -0.005])
-            .scrollY(0.005)
-            .out(o1);
-
-          render(o1);
-        }
-      },
-    });
+  <script>
     AFRAME.registerComponent("texture-loader", {
       schema: {
         src: {},
