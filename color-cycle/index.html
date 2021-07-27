@@ -12,32 +12,39 @@
     var sceneEl = document.querySelector("a-scene");
     AFRAME.registerComponent("color-cycle", {
       schema: {
-        r: { type: "number", default: "0x0" },
-        g: { type: "number", default: "0x0" },
-        b: { type: "number", default: "0x0" },
+        r: { type: "number", default: "0x00" },
+        g: { type: "number", default: "0x00" },
+        b: { type: "number", default: "0x00" },
       },
       init: function () {
         this.entities = document.querySelector("#cylinder");
         this.count = this.entities.getAttribute("color");
-        this.tick = AFRAME.utils.throttleTick(this.tick, 500, this);
+        this.tick = AFRAME.utils.throttleTick(this.tick, 50, this);
       },
       tick: function () {
+        console.log(this.data.r.toString(16).length);
         var colorStr =
           "#" +
-          this.data.r.toString(16) +
-          this.data.g.toString(16) +
-          this.data.b.toString(16);
+          this.data.r
+            .toString(16)
+            .padStart(3 - this.data.r.toString(16).length, "0") +
+          this.data.g
+            .toString(16)
+            .padStart(3 - this.data.g.toString(16).length, "0") +
+          this.data.b
+            .toString(16)
+            .padStart(3 - this.data.b.toString(16).length, "0");
 
-        if (this.data.b < 0xf) {
+        if (this.data.b < 0xff) {
           this.data.b++;
-        } else if (this.data.g < 0xf) {
+        } else if (this.data.g < 0xff) {
           this.data.g++;
-        } else if (this.data.r < 0xf) {
+        } else if (this.data.r < 0xff) {
           this.data.r++;
         } else {
-          this.data.r = 0x0;
-          this.data.g = 0x0;
-          this.data.b = 0x0;
+          this.data.r = 0x00;
+          this.data.g = 0x00;
+          this.data.b = 0x00;
         }
         console.log(colorStr);
         this.entities.setAttribute("color", colorStr);
