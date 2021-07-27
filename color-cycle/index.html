@@ -17,12 +17,14 @@
         b: { type: "number", default: "0x00" },
       },
       init: function () {
-        this.entities = document.querySelector("#cylinder");
+        this.entities = document.querySelector("#sphere");
         this.count = this.entities.getAttribute("color");
         this.tick = AFRAME.utils.throttleTick(this.tick, 50, this);
+        this.countUp = true;
+
       },
       tick: function () {
-        console.log(this.data.r.toString(16).length);
+
         var colorStr =
           "#" +
           this.data.r
@@ -35,16 +37,24 @@
             .toString(16)
             .padStart(3 - this.data.b.toString(16).length, "0");
 
-        if (this.data.b < 0xff) {
+        if (this.countUp && this.data.b < 0xff) {
           this.data.b++;
-        } else if (this.data.g < 0xff) {
+        } else if (this.countUp && this.data.g < 0xff) {
           this.data.g++;
-        } else if (this.data.r < 0xff) {
+        } else if (this.countUp && this.data.r < 0xff) {
           this.data.r++;
         } else {
-          this.data.r = 0x00;
-          this.data.g = 0x00;
-          this.data.b = 0x00;
+          this.countUp = false;
+        }
+        
+        if (!this.countUp && this.data.b > 0x00) {
+          this.data.b--;
+        } else if (!this.countUp && this.data.g > 0x00) {
+          this.data.g--;
+        } else if (!this.countUp && this.data.r > 0x00) {
+          this.data.r--;
+        } else {
+          this.countUp = true;
         }
         console.log(colorStr);
         this.entities.setAttribute("color", colorStr);
@@ -61,14 +71,14 @@
         rotation="0 0 0"
       >
         <a-entity
-          animation="property: rotation; to: 360 0 0; loop: true; dur: 7500; easing: linear"
+          animation="property: position;  easing: easeInOutQuad; dir: alternate; from: -5 0 0; to: 5 0 0; loop: true; dur: 7500; easing: linear"
         >
-          <a-cylinder
-            id="cylinder"
+          <a-sphere
+            id="sphere"
             color="#000"
             position="0 0 5"
             color-cycle
-          ></a-cylinder> </a-entity
+          ></a-csphere> </a-entity
       ></a-plane>
     </a-scene>
   </body>
