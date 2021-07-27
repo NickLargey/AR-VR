@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Color Cycle</title>
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://unpkg.com/aframe-physics-system@1.4.0/dist/aframe-physics-system.min.js"></script>
+  </head>
+  <script>
+    var sceneEl = document.querySelector("a-scene");
+    AFRAME.registerComponent("color-cycle", {
+      schema: {
+        r: { type: "number", default: "0x0" },
+        g: { type: "number", default: "0x0" },
+        b: { type: "number", default: "0x0" },
+      },
+      init: function () {
+        this.entities = document.querySelector("#cylinder");
+        console.log(this.entities.getAttribute("color"));
+        this.count = this.entities.getAttribute("color");
+      },
+      tick: function () {
+        if (this.data.r < 0xf) {
+          var colorStr =
+            "#" +
+            this.data.r.toString(16) +
+            this.data.g.toString(16) +
+            this.data.b.toString(16);
+          console.log(colorStr);
+          this.entities.setAttribute("color", colorStr);
+          this.data.r++;
+        } else {
+          this.data.r = 0x0;
+        }
+      },
+    });
+  </script>
+  <body>
+    <a-scene>
+      <a-plane
+        width="25"
+        height="10"
+        color="#111"
+        position="0 0 -15"
+        rotation="0 0 0"
+      >
+        <a-entity
+          animation="property: rotation; to: 360 0 0; loop: true; dur: 7500; easing: linear"
+        >
+          <a-cylinder
+            id="cylinder"
+            color="#000"
+            position="0 0 5"
+            color-cycle
+          ></a-cylinder> </a-entity
+      ></a-plane>
+    </a-scene>
+  </body>
+</html>
