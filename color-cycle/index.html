@@ -18,22 +18,29 @@
       },
       init: function () {
         this.entities = document.querySelector("#cylinder");
-        console.log(this.entities.getAttribute("color"));
         this.count = this.entities.getAttribute("color");
+        this.tick = AFRAME.utils.throttleTick(this.tick, 500, this);
       },
       tick: function () {
-        if (this.data.r < 0xf) {
-          var colorStr =
-            "#" +
-            this.data.r.toString(16) +
-            this.data.g.toString(16) +
-            this.data.b.toString(16);
-          console.log(colorStr);
-          this.entities.setAttribute("color", colorStr);
+        var colorStr =
+          "#" +
+          this.data.r.toString(16) +
+          this.data.g.toString(16) +
+          this.data.b.toString(16);
+
+        if (this.data.b < 0xf) {
+          this.data.b++;
+        } else if (this.data.g < 0xf) {
+          this.data.g++;
+        } else if (this.data.r < 0xf) {
           this.data.r++;
         } else {
           this.data.r = 0x0;
+          this.data.g = 0x0;
+          this.data.b = 0x0;
         }
+        console.log(colorStr);
+        this.entities.setAttribute("color", colorStr);
       },
     });
   </script>
