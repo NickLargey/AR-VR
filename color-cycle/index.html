@@ -12,19 +12,26 @@
     var sceneEl = document.querySelector("a-scene");
     AFRAME.registerComponent("color-cycle", {
       schema: {
-        r: { type: "number", default: "0x00" },
-        g: { type: "number", default: "0x00" },
-        b: { type: "number", default: "0x00" },
+        src:{},
+        r: { type: "number", default: 0x00 },
+        g: { type: "number", default: 0x00 },
+        b: { type: "number", default: 0x00 },
+        dir: { type: "boolean", default: true }
       },
       init: function () {
-        this.entities = document.querySelector("#sphere");
-        this.count = this.entities.getAttribute("color");
+        this.entities = document.querySelector("#" + this.data.src);       
         this.tick = AFRAME.utils.throttleTick(this.tick, 50, this);
-        this.countUp = true;
-
+        this.countUp = this.data.dir;
+        if(!this.countUp){
+            this.data.r = 0xff;
+            this.data.g = 0xff;
+            this.data.b = 0xff;
+            this.entities.setAttribute("color", "#" + this.data.r + this.data.g + this.data.b)
+          }
+        console.log(this.entities.getAttribute("color"), this.countUp);
+        this.count = this.entities.getAttribute("color");
       },
       tick: function () {
-
         var colorStr =
           "#" +
           this.data.r
@@ -56,7 +63,7 @@
         } else {
           this.countUp = true;
         }
-        console.log(colorStr);
+        console.log(colorStr, this.countUp);
         this.entities.setAttribute("color", colorStr);
       },
     });
@@ -64,20 +71,20 @@
   <body>
     <a-scene>
       <a-plane
+        id="plane"
         width="25"
         height="10"
-        color="#111"
         position="0 0 -15"
         rotation="0 0 0"
+        color-cycle="src: plane; dir: true"
       >
         <a-entity
           animation="property: position;  easing: easeInOutQuad; dir: alternate; from: -5 0 0; to: 5 0 0; loop: true; dur: 7500; easing: linear"
         >
           <a-sphere
             id="sphere"
-            color="#000"
             position="0 0 5"
-            color-cycle
+            color-cycle="src: sphere; dir: false"
           ></a-csphere> </a-entity
       ></a-plane>
     </a-scene>
