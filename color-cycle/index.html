@@ -12,22 +12,25 @@
     var sceneEl = document.querySelector("a-scene");
     AFRAME.registerComponent("color-cycle", {
       schema: {
-        src:{},
+        src: {},
         r: { type: "number", default: 0x00 },
         g: { type: "number", default: 0x00 },
         b: { type: "number", default: 0x00 },
-        dir: { type: "boolean", default: true }
+        dir: { type: "boolean", default: true },
       },
       init: function () {
-        this.entities = document.querySelector("#" + this.data.src);       
+        this.entities = document.querySelector("#" + this.data.src);
         this.tick = AFRAME.utils.throttleTick(this.tick, 50, this);
         this.countUp = this.data.dir;
-        if(!this.countUp){
-            this.data.r = 0xff;
-            this.data.g = 0xff;
-            this.data.b = 0xff;
-            this.entities.setAttribute("color", "#" + this.data.r + this.data.g + this.data.b)
-          }
+        if (!this.countUp) {
+          this.data.r = 0xff;
+          this.data.g = 0xff;
+          this.data.b = 0xff;
+          this.entities.setAttribute(
+            "color",
+            "#" + this.data.r + this.data.g + this.data.b
+          );
+        }
         console.log(this.entities.getAttribute("color"), this.countUp);
         this.count = this.entities.getAttribute("color");
       },
@@ -53,7 +56,7 @@
         } else {
           this.countUp = false;
         }
-        
+
         if (!this.countUp && this.data.b > 0x00) {
           this.data.b--;
         } else if (!this.countUp && this.data.g > 0x00) {
@@ -85,7 +88,7 @@
             id="sphere"
             position="0 0 5"
             color-cycle="src: sphere; dir: false"
-          ></a-csphere> </a-entity
+          ></a-sphere> </a-entity
       ></a-plane>
     </a-scene>
   </body>

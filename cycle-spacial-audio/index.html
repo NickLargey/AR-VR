@@ -7,38 +7,42 @@
     <title>Cycle-Spacial-Audio</title>
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.0/dist/aframe-extras.min.js"></script>
-    <script
-      type="text/html"
-      src="https://unpkg.com/browse/aframe-particle-system-component@1.1.3/dist/aframe-particle-system-component.min.js"
-    ></script>
   </head>
   <script>
     AFRAME.registerComponent("leslie", {
       schema: {
         src: {},
       },
-      init: function () {},
+      init: function () {
+        this.entity = document.querySelector("#" + this.data.src).object3D;
+        this.sourceDir = this.entity.parent.rotation.y;
+      },
+      tick: function () {
+        console.log(this.sourceDir);
+      },
     });
   </script>
   <body>
-    <a-scene>
+    <a-scene background="color: red">
       <a-assets>
         <img id="sky" src="sky.jpg" />
       </a-assets>
-      <a-entity
-        id="rain"
-        particle-system="preset: rain; color: #24CAFF; particleCount: 5000"
-      ></a-entity>
-      <a-sky src="#sky"></a-sky>
+      <a-sky src="#sky" opacity="0.75"></a-sky>
       <a-entity>
         <a-cylinder
           position="0 2 -10"
           color="tan"
           animation="property: rotation; to: 0 -360 0; loop: true; dur: 7500; easing: linear"
         >
-          <a-sphere position="1 0 0" scale="0.25 0.25 0.25"></a-sphere>
+          <a-sphere
+            id="speaker"
+            position="1 0 0"
+            scale="0.25 0.25 0.25"
+            leslie="src: speaker"
+          ></a-sphere>
         </a-cylinder>
       </a-entity>
+      <a-entity id="light" light="type: ambient; color: #888"></a-entity>
     </a-scene>
   </body>
 </html>
