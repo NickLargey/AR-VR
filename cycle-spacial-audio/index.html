@@ -15,9 +15,9 @@
       },
       init: function () {
         this.entity = document.querySelector("#" + this.data.src).object3D;
-        this.sourceDir = this.entity.parent.rotation.y;
       },
       tick: function () {
+        this.sourceDir = this.entity.parent.rotation.y;
         console.log(this.sourceDir);
       },
     });
@@ -25,7 +25,13 @@
   <body>
     <a-scene background="color: red">
       <a-assets>
-        <img id="sky" src="sky.jpg" />
+        <img id="sky" src="assets/sky.jpg" />
+        <audio
+          id="main"
+          crossorigin="anonymous"
+          src="assets/organ.wav"
+          preload="true"
+        ></audio>
       </a-assets>
       <a-sky src="#sky" opacity="0.75"></a-sky>
       <a-entity>
@@ -39,6 +45,7 @@
             position="1 0 0"
             scale="0.25 0.25 0.25"
             leslie="src: speaker"
+            sound="src:#main; autoplay:true; loop:true; volume: .5"
           ></a-sphere>
         </a-cylinder>
       </a-entity>
