@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>boxes</title>
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.0/dist/aframe-extras.min.js"></script>
+  </head>
+  <script>
+    AFRAME.registerComponent("elongate", {
+      schema: {
+        src: {},
+      },
+      init: function () {
+        this.entity = document.querySelector("#" + this.data.src);
+
+        this.tick = AFRAME.utils.throttleTick(this.tick, 70, this);
+      },
+      tick: function () {
+        this.h = Number(this.entity.getAttribute("height"));
+        this.h = this.h + 0.1;
+        this.z = this.h / 2;
+        if (this.h < 75) {
+          this.entity.setAttribute("height", this.h.toString());
+          this.entity.object3D.position.set(0, 0, this.z.toString());
+        } else {
+          this.entity.setAttribute("height", "1");
+        }
+        console.log(this.entity.object3D.position);
+      },
+    });
+
+    for(i=0, i< 50; i++){
+        
+    }
+  </script>
+  <body>
+    <a-scene>
+      <a-plane
+        width="50"
+        height="50"
+        rotation="-90 0 0"
+        color="black"
+        position="0 -10 0"
+      >
+        <a-box
+          id="box"
+          position="0 0 0"
+          rotation="90 0 0"
+          elongate="src: box"
+          height="1"
+          ><a-entity
+            light="type: hemisphere; color: #33C; groundColor: #3C3; intensity: 2"
+          ></a-entity></a-box
+      ></a-plane>
+    </a-scene>
+  </body>
+</html>
