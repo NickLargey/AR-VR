@@ -15,7 +15,7 @@
       },
       init: function () {
         this.entity = document.querySelector(`#${this.data.src}`);
-        this.tick = AFRAME.utils.throttleTick(this.tick, 70, this);
+        this.tick = AFRAME.utils.throttleTick(this.tick, 50, this);
       },
       tick: function () {
         this.h = Number(this.entity.getAttribute("height"));
@@ -62,8 +62,11 @@
           var tag = document.createElement("a-box");
 
           tag.setAttribute("id", `box${this.count}`);
-          tag.setAttribute("color", "red");
+          tag.setAttribute("color", "#2c3e50");
           tag.setAttribute("height", 1);
+          tag.setAttribute("width", 10);
+          tag.setAttribute("depth", 10);
+          tag.setAttribute("metalness", 1);
           tag.object3D.position.set(xPos, yPos, 1);
           console.log(tag.object3D.position.y);
           tag.setAttribute("rotation", { x: 90, y: 0, z: 0 });
@@ -77,27 +80,26 @@
     });
   </script>
   <body>
-    <a-scene>
+    <a-scene background="color:black">
+      <a-entity
+        light="type: directional; color:  #e6b0aa ; intensity: .5 ;castShadow: true;"
+        position="-1 1 0"
+      ></a-entity>
+      <a-entity
+        light="type: directional; color: #52be80; intensity: .6; castShadow: true;"
+        position="1 1 -1"
+      ></a-entity>
+      <a-entity light="type: spot; angle: 45"></a-entity>
       <a-plane
         id="plane"
-        width="50"
-        height="50"
+        width="100"
+        height="100"
         rotation="-90 0 0"
         color="black"
-        position="0 -10 -50"
-        add-boxes="totalBoxes: 10"
+        position="0 -20 -50"
+        add-boxes="totalBoxes: 100"
       >
-        <!-- <a-box
-          id="box"
-          position="0 0 0"
-          rotation="90 0 0"
-          elongate="src: box"
-          height="1"
-          ><a-entity
-            light="type: hemisphere; color: #33C; groundColor: #3C3; intensity: 2"
-          ></a-entity></a-box
-      > --></a-plane
-      >
+      </a-plane>
     </a-scene>
   </body>
 </html>
