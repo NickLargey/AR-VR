@@ -16,12 +16,26 @@
       init: function () {
         this.entity = document.querySelector(`#${this.data.src}`);
         this.tick = AFRAME.utils.throttleTick(this.tick, 50, this);
+        this.flag = true;
       },
       tick: function () {
         this.h = Number(this.entity.getAttribute("height"));
-        this.h = this.h + 0.1;
+        this.h = this.flag ? this.h + 0.01 : this.h - 0.01;
         this.z = this.h / 2;
-        if (this.h < 30) {
+
+        if (this.flag && this.h < 30) {
+          this.entity.setAttribute("height", this.h.toString());
+
+          this.entity.object3D.position.set(
+            this.entity.object3D.position.x,
+            this.entity.object3D.position.y,
+            this.z.toString()
+          );
+        } else {
+          this.flag = false;
+        }
+
+        if (!this.flag && this.h > 0) {
           this.entity.setAttribute("height", this.h.toString());
           this.entity.object3D.position.set(
             this.entity.object3D.position.x,
@@ -29,7 +43,7 @@
             this.z.toString()
           );
         } else {
-          this.entity.setAttribute("height", "0");
+          this.flag = true;
         }
       },
     });
@@ -63,13 +77,13 @@
 
           tag.setAttribute("id", `box${this.count}`);
           tag.setAttribute("color", "#2c3e50");
+          tag.setAttribute("rotation", { x: 90, y: 0, z: 0 });
           tag.setAttribute("height", 1);
           tag.setAttribute("width", 10);
           tag.setAttribute("depth", 10);
           tag.setAttribute("metalness", 1);
           tag.object3D.position.set(xPos, yPos, 1);
-          console.log(tag.object3D.position.y);
-          tag.setAttribute("rotation", { x: 90, y: 0, z: 0 });
+
           this.planeEntity.appendChild(tag);
 
           tag.setAttribute("elongate", `src:${tag.getAttribute("id")}`);
@@ -81,6 +95,9 @@
   </script>
   <body>
     <a-scene background="color:black">
+      <a-entity id="rig" movement-controls="fly: true; speed: 0.3">
+        <a-entity camera position="0 1.6 0" look-controls></a-entity>
+      </a-entity>
       <a-entity
         light="type: directional; color:  #e6b0aa ; intensity: .5 ;castShadow: true;"
         position="-1 1 0"
@@ -96,7 +113,7 @@
         height="100"
         rotation="-90 0 0"
         color="black"
-        position="0 -20 -50"
+        position="0 -2 -50"
         add-boxes="totalBoxes: 100"
       >
       </a-plane>
