@@ -9,11 +9,11 @@ var hydra = new Hydra({
 });
 
 osc(0.01)
-  .rotate(Math.abs(1408 / 26) / 337, [0, 0.5, 1, 5, Math.abs(503 / 337) * 26])
+  .rotate(0.1, 0.5)
   .kaleid(64)
   .invert(50)
   .color(1, 0.0078, 0.576)
   .brightness(0.1)
-  .mask(voronoi(64, 10, 10).brightness(0.1), 0.01, 0.1)
+  .mask(voronoi(64, 0.5, 5).brightness(0.1), 0.01, 0.1)
+  .modulate(noise(0.5), 0.1)
   .out(o0);
-console.log(mouse.x, mouse.y);
