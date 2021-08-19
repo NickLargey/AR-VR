@@ -8,12 +8,11 @@ var hydra = new Hydra({
   enableStreamCapture: false,
 });
 
-osc(0.01)
-  .rotate(0.1, 0.5)
+osc(0.001)
+  .rotate(360, 0.5)
   .kaleid(64)
   .invert(50)
-  .color(1, 0.0078, 0.576)
-  .brightness(0.1)
-  .mask(voronoi(64, 0.5, 5).brightness(0.1), 0.01, 0.1)
-  .modulate(noise(0.5), 0.1)
+  .color(1, 0.078, 0.576)
+  .mask(voronoi(124, 0.5, 5).brightness(0.1), 0.01, 0.1)
+  .modulate(noise(0.5), 0.2)
   .out(o0);
